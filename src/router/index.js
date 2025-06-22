@@ -1,7 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-// Splash Screen
+// Splash Screen & Landing Pages
 import SplashScreen from '../views/SplashScreen.vue'
+import LandingPage from '../views/LandingPage.vue'
+import InstallInstructions from '../views/InstallInstructions.vue'
 
 // Auth views
 import TheAuthLayout from '../views/auth/TheAuthLayout.vue'
@@ -28,6 +30,18 @@ const router = createRouter({
       path: '/',
       name: 'SplashScreen',
       component: SplashScreen,
+    },
+
+    // Landing et installation pour PWA
+    {
+      path: '/landing',
+      name: 'LandingPage',
+      component: LandingPage,
+    },
+    {
+      path: '/install',
+      name: 'InstallInstructions',
+      component: InstallInstructions,
     },
 
     // Auth routes

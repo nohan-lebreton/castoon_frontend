@@ -16,6 +16,7 @@ import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth } from '../stores/useAuth'
 import { useLastRoute } from '../stores/useLastRoute'
+import { isMobileDevice } from '../utils/deviceDetection'
 
 const router = useRouter()
 const authStore = useAuth()
@@ -45,7 +46,15 @@ onMounted(() => {
           if (authStore.isAuthenticated) {
             router.push({ name: 'ParentHome' })
           } else {
-            router.push({ name: 'AuthLogin' })
+            // Pour les nouveaux utilisateurs, vérifier si mobile ou desktop
+            const isMobile = isMobileDevice()
+            if (isMobile) {
+              // Sur mobile, rediriger vers les instructions d'installation
+              router.push({ name: 'InstallInstructions' })
+            } else {
+              // Sur desktop, rediriger vers la landing page avec QR code
+              router.push({ name: 'LandingPage' })
+            }
           }
         }
       }, redirectTime)
