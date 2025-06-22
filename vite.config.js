@@ -20,7 +20,7 @@ export default defineConfig({
         theme_color: '#ffffff',
         background_color: '#ffffff',
         display: 'standalone',
-        orientation: 'portrait',
+        orientation: 'any', // Permet à l'application de changer d'orientation selon la route
         scope: '/',
         start_url: '/',
         icons: [

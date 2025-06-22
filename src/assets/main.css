@@ -1,14 +1,37 @@
 @import './base.css';
 
+/* Désactivation complète du thème sombre */
+html.dark {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* Force le thème clair pour tous les appareils */
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: light !important;
+  }
+}
+
+body {
+  background-image: url('../assets/LITTLE_CASTOON_BG.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: right;
+  min-height: 100vh;
+  width: 100%;
+}
+
 #app {
-  max-width: 1280px;
+  width: 100%;
+  min-height: 100vh;
   margin: 0 auto;
   padding: 2rem;
   font-weight: normal;
 }
 
 :root {
-  color-scheme: light;
+  color-scheme: light !important;
   --background-color: #ffffff;
   --text-color: #000000;
 }
@@ -17,6 +40,8 @@ html,
 body {
   background-color: var(--background-color);
   color: var(--text-color);
+  /* Forcer le thème clair */
+  color-scheme: light !important;
 }
 
 a,
@@ -37,9 +62,12 @@ a,
   body {
     display: flex;
     place-items: center;
+    justify-content: center;
   }
 
   #app {
+    width: 100%;
+    max-width: 1280px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     padding: 0 2rem;

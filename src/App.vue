@@ -1,4 +1,37 @@
-<script setup></script>
+<script setup>
+import { useTransition } from '@/stores/useTransition'
+import { useRoute } from 'vue-router'
+import { watch, onMounted } from 'vue'
+
+const transitionStore = useTransition()
+const route = useRoute()
+
+// Fonction pour mettre à jour la couleur de fond en fonction de la route
+const updateBackgroundColor = () => {
+  const appEl = document.getElementById('app')
+  if (appEl) {
+    if (route.meta.darkBackground) {
+      appEl.style.backgroundColor = '#383838'
+    } else {
+      appEl.style.backgroundColor = '' // Revenir à la couleur par défaut
+    }
+  }
+}
+
+// Mettre à jour la couleur de fond à chaque changement de route
+watch(
+  () => route.name,
+  () => {
+    updateBackgroundColor()
+  },
+  { immediate: true },
+)
+
+// S'assurer que la couleur est correcte au chargement initial
+onMounted(() => {
+  updateBackgroundColor()
+})
+</script>
 
 <template>
   <head>
@@ -24,7 +57,11 @@
     name="viewport"
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
   />
-  <RouterView />
+  <router-view v-slot="{ Component }">
+    <transition :name="transitionStore.name" mode="out-in">
+      <component :is="Component" />
+    </transition>
+  </router-view>
 </template>
 
 <style scoped>
@@ -45,6 +82,8 @@ body {
   height: 100%;
   overflow: auto; /* Permet le défilement à l'intérieur de l'app */
   -webkit-overflow-scrolling: touch; /* Défilement fluide sur iOS */
+  z-index: 1; /* S'assurer que le contenu est au-dessus du fond */
+  transition: background-color 0.3s ease; /* Transition fluide pour le changement de couleur */
 }
 /* Empêche la sélection de texte qui peut interférer avec l'expérience */
 * {

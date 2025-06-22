@@ -1,0 +1,134 @@
+/* Font import declarations */
+@font-face {
+  font-family: 'MVB Grenadine';
+  src: url('./font/MVB GRENADINE/fonnts.com-Grenadine_MVB_Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MVB Grenadine';
+  src: url('./font/MVB GRENADINE/fonnts.com-Grenadine_MVB_Italic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MVB Grenadine';
+  src: url('./font/MVB GRENADINE/fonnts.com-Grenadine_MVB_Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MVB Grenadine';
+  src: url('./font/MVB GRENADINE/fonnts.com-Grenadine_MVB_Medium_Italic.otf') format('opentype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MVB Grenadine';
+  src: url('./font/MVB GRENADINE/fonnts.com-Grenadine_MVB_Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MVB Grenadine';
+  src: url('./font/MVB GRENADINE/fonnts.com-Grenadine_MVB_Bold_Italic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MVB Grenadine';
+  src: url('./font/MVB GRENADINE/fonnts.com-Grenadine_MVB_Extra_Bold.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MVB Grenadine';
+  src: url('./font/MVB GRENADINE/fonnts.com-Grenadine_MVB_Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Utility classes for using MVB Grenadine font */
+.font-grenadine {
+  font-family: 'MVB Grenadine', sans-serif;
+}
+
+.font-grenadine-regular {
+  font-family: 'MVB Grenadine', sans-serif;
+  font-weight: 400;
+}
+
+.font-grenadine-medium {
+  font-family: 'MVB Grenadine', sans-serif;
+  font-weight: 500;
+}
+
+.font-grenadine-bold {
+  font-family: 'MVB Grenadine', sans-serif;
+  font-weight: 700;
+}
+
+.font-grenadine-extrabold {
+  font-family: 'MVB Grenadine', sans-serif;
+  font-weight: 800;
+}
+
+.font-grenadine-black {
+  font-family: 'MVB Grenadine', sans-serif;
+  font-weight: 900;
+}
+
+@font-face {
+  font-family: 'MVB Grenadine';
+  src: url('./font/MVB GRENADINE/fonnts.com-Grenadine_MVB_Medium_Italic.otf') format('opentype');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MVB Grenadine';
+  src: url('./font/MVB GRENADINE/fonnts.com-Grenadine_MVB_Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MVB Grenadine';
+  src: url('./font/MVB GRENADINE/fonnts.com-Grenadine_MVB_Bold_Italic.otf') format('opentype');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MVB Grenadine';
+  src: url('./font/MVB GRENADINE/fonnts.com-Grenadine_MVB_Extra_Bold.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MVB Grenadine';
+  src: url('./font/MVB GRENADINE/fonnts.com-Grenadine_MVB_Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
