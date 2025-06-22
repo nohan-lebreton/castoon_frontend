@@ -13,40 +13,36 @@ const subscription = ref({
   plan: 'Premium',
   status: 'Actif',
   nextBillingDate: '22/07/2025',
-  price: '9.99€/mois'
+  price: '9.99€/mois',
 })
 
 const plans = ref([
   {
     name: 'Basic',
     price: '4.99€/mois',
-    features: [
-      'Accès à 10 histoires par mois',
-      '1 profil enfant',
-      'Téléchargement limité'
-    ]
+    features: ['Accès à 10 histoires par mois', '1 profil enfant', 'Téléchargement limité'],
   },
   {
     name: 'Premium',
     price: '9.99€/mois',
     features: [
       'Accès illimité à toutes les histoires',
-      'Jusqu\'à 3 profils enfants',
+      "Jusqu'à 3 profils enfants",
       'Téléchargements illimités',
-      'Pas de publicités'
-    ]
+      'Pas de publicités',
+    ],
   },
   {
     name: 'Famille',
     price: '14.99€/mois',
     features: [
       'Accès illimité à toutes les histoires',
-      'Jusqu\'à 5 profils enfants',
+      "Jusqu'à 5 profils enfants",
       'Téléchargements illimités',
       'Pas de publicités',
-      'Contrôle parental avancé'
-    ]
-  }
+      'Contrôle parental avancé',
+    ],
+  },
 ])
 
 const changePlan = (plan) => {
@@ -55,7 +51,7 @@ const changePlan = (plan) => {
 }
 
 const cancelSubscription = () => {
-  console.log('Annulation de l\'abonnement')
+  console.log("Annulation de l'abonnement")
   // Logique pour annuler l'abonnement
 }
 </script>
@@ -100,17 +96,17 @@ const cancelSubscription = () => {
             <span class="info-value">{{ subscription.price }}</span>
           </div>
         </div>
-        <Button 
-          label="Annuler l'abonnement" 
-          severity="danger" 
-          class="p-button-outlined mt-3" 
-          @click="cancelSubscription" 
+        <Button
+          label="Annuler l'abonnement"
+          severity="danger"
+          class="p-button-outlined mt-3"
+          @click="cancelSubscription"
         />
       </template>
     </Card>
 
     <h3 class="plans-title mt-4">Changer de plan</h3>
-    
+
     <div class="plans-grid">
       <Card v-for="(plan, index) in plans" :key="index" class="plan-card">
         <template #title>
@@ -123,12 +119,12 @@ const cancelSubscription = () => {
           <ul class="plan-features">
             <li v-for="(feature, i) in plan.features" :key="i">{{ feature }}</li>
           </ul>
-          <Button 
-            :label="plan.name === subscription.plan ? 'Plan actuel' : 'Choisir ce plan'" 
+          <Button
+            :label="plan.name === subscription.plan ? 'Plan actuel' : 'Choisir ce plan'"
             :disabled="plan.name === subscription.plan"
-            :severity="plan.name === subscription.plan ? 'info' : 'success'" 
-            class="w-full" 
-            @click="changePlan(plan)" 
+            :severity="plan.name === subscription.plan ? 'info' : 'success'"
+            class="w-full"
+            @click="changePlan(plan)"
           />
         </template>
       </Card>

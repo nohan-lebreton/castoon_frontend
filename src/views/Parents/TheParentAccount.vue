@@ -15,7 +15,7 @@ const formData = ref({
   email: '',
   currentPassword: '',
   newPassword: '',
-  confirmPassword: ''
+  confirmPassword: '',
 })
 
 onMounted(() => {

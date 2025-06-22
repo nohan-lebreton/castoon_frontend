@@ -73,8 +73,9 @@ const updatePin = () => {
       <template #content>
         <div class="pin-content">
           <p class="pin-info">
-            Le code PIN permet de protéger l'accès aux fonctionnalités parentales. 
-            Assurez-vous de choisir un code que vous pouvez facilement mémoriser mais difficile à deviner pour vos enfants.
+            Le code PIN permet de protéger l'accès aux fonctionnalités parentales. Assurez-vous de
+            choisir un code que vous pouvez facilement mémoriser mais difficile à deviner pour vos
+            enfants.
           </p>
 
           <div v-if="hasPinSet" class="pin-form-section">
@@ -99,11 +100,11 @@ const updatePin = () => {
           </div>
 
           <div class="pin-actions">
-            <Button 
-              label="Enregistrer le code PIN" 
-              severity="success" 
-              icon="pi pi-check" 
-              @click="updatePin" 
+            <Button
+              label="Enregistrer le code PIN"
+              severity="success"
+              icon="pi pi-check"
+              @click="updatePin"
             />
           </div>
         </div>
