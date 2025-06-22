@@ -60,7 +60,7 @@ function playWithSelectedChild() {
           severity="success"
           icon="pi pi-play-circle"
           size="large"
-          rounded
+          class="playButton"
           raised
           @click="playWithSelectedChild()"
         />
@@ -87,5 +87,24 @@ function playWithSelectedChild() {
   height: 300px;
   border-radius: 50%;
   object-fit: cover;
+}
+.playButton {
+  margin-top: 20px;
+  width: 150px;
+  height: 50px;
+  font-size: 1.2em;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 </style>
