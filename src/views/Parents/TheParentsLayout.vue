@@ -25,7 +25,7 @@ const items = ref([
         icon: 'pi pi-user',
         command: () => {
           transitionStore.setTransition('fade')
-          router.push({ name: 'parentProfile' })
+          router.push({ name: 'parentAccount' })
         },
       },
       {
@@ -60,6 +60,10 @@ const items = ref([
       {
         label: 'Code pin',
         icon: 'pi pi-lock',
+        command: () => {
+          transitionStore.setTransition('fade')
+          router.push({ name: 'parentPin' })
+        },
       },
     ],
   },

@@ -1,11 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { isMobileDevice } from '../utils/deviceDetection'
-import { isPWAInstalled } from '../utils/redirectUtils'
 
-// Splash Screen & Landing Pages
+// Splash Screen
 import SplashScreen from '../views/SplashScreen.vue'
-import LandingPage from '../views/LandingPage.vue'
-import InstallInstructions from '../views/InstallInstructions.vue'
 
 // Auth views
 import TheAuthLayout from '../views/auth/TheAuthLayout.vue'
@@ -15,6 +11,9 @@ import TheLogin from '../views/auth/TheLogin.vue'
 import TheParentLayout from '../views/Parents/TheParentsLayout.vue'
 import TheParentHome from '../views/Parents/TheParentHome.vue'
 import TheParentChild from '../views/Parents/TheParentChild.vue'
+import TheParentAccount from '../views/Parents/TheParentAccount.vue'
+import TheParentSubscription from '../views/Parents/TheParentSubscription.vue'
+import TheParentPin from '../views/Parents/TheParentPin.vue'
 
 // Children views
 import TheChildLayout from '../views/Childrens/TheChildLayout.vue'
@@ -32,18 +31,6 @@ const router = createRouter({
       path: '/',
       name: 'SplashScreen',
       component: SplashScreen,
-    },
-
-    // Landing et installation pour PWA
-    {
-      path: '/landing',
-      name: 'LandingPage',
-      component: LandingPage,
-    },
-    {
-      path: '/install',
-      name: 'InstallInstructions',
-      component: InstallInstructions,
     },
 
     // Auth routes
@@ -76,6 +63,21 @@ const router = createRouter({
           name: 'ParentChild',
           component: TheParentChild,
           props: true,
+        },
+        {
+          path: 'account',
+          name: 'parentAccount',
+          component: TheParentAccount,
+        },
+        {
+          path: 'subscription',
+          name: 'parentSubscription',
+          component: TheParentSubscription,
+        },
+        {
+          path: 'pin',
+          name: 'parentPin',
+          component: TheParentPin,
         },
       ],
     },
@@ -126,50 +128,6 @@ router.beforeEach((to, from, next) => {
   // Splash screen est toujours accessible
   if (to.name === 'SplashScreen') {
     next()
-    return
-  }
-
-  // Pages d'accueil spéciales - toujours accessibles
-  if (to.name === 'LandingPage' || to.name === 'InstallInstructions') {
-    // Vérifier si on est sur la bonne page selon le device
-    const isMobile = isMobileDevice()
-    const isPWA = isPWAInstalled()
-
-    // Si on est sur PWA installée, on peut accéder à l'application
-    if (isPWA && to.name === 'InstallInstructions') {
-      next()
-      return
-    }
-
-    // Si on est sur mobile mais pas sur la page d'installation
-    if (isMobile && !isPWA && to.name !== 'InstallInstructions') {
-      next({ name: 'InstallInstructions' })
-      return
-    }
-
-    // Si on est sur desktop mais pas sur la landing page
-    if (!isMobile && to.name !== 'LandingPage') {
-      next({ name: 'LandingPage' })
-      return
-    }
-
-    next()
-    return
-  }
-
-  // Pour les routes protégées qui nécessitent un appareil mobile ou une PWA
-  const isMobile = isMobileDevice()
-  const isPWA = isPWAInstalled()
-
-  // Bloquer l'accès direct à l'application sur desktop
-  if (!isMobile && !to.path.includes('/landing') && to.name !== 'LandingPage') {
-    next({ name: 'LandingPage' })
-    return
-  }
-
-  // Sur mobile, si l'app n'est pas installée et qu'on tente d'accéder à une route protégée
-  if (isMobile && !isPWA && !to.path.includes('/install') && to.name !== 'InstallInstructions') {
-    next({ name: 'InstallInstructions' })
     return
   }
 
