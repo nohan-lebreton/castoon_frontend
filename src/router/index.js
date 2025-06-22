@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { isMobileDevice } from '../utils/deviceDetection'
+import { isPWAInstalled } from '../utils/redirectUtils'
 
 // Splash Screen & Landing Pages
 import SplashScreen from '../views/SplashScreen.vue'
@@ -118,6 +120,56 @@ router.beforeEach((to, from, next) => {
   // mais en route vers la déconnexion
   if (to.name === 'AuthLogin' && from.path.includes('/parents') && isAuthenticated) {
     next()
+    return
+  }
+
+  // Splash screen est toujours accessible
+  if (to.name === 'SplashScreen') {
+    next()
+    return
+  }
+
+  // Pages d'accueil spéciales - toujours accessibles
+  if (to.name === 'LandingPage' || to.name === 'InstallInstructions') {
+    // Vérifier si on est sur la bonne page selon le device
+    const isMobile = isMobileDevice()
+    const isPWA = isPWAInstalled()
+
+    // Si on est sur PWA installée, on peut accéder à l'application
+    if (isPWA && to.name === 'InstallInstructions') {
+      next()
+      return
+    }
+
+    // Si on est sur mobile mais pas sur la page d'installation
+    if (isMobile && !isPWA && to.name !== 'InstallInstructions') {
+      next({ name: 'InstallInstructions' })
+      return
+    }
+
+    // Si on est sur desktop mais pas sur la landing page
+    if (!isMobile && to.name !== 'LandingPage') {
+      next({ name: 'LandingPage' })
+      return
+    }
+
+    next()
+    return
+  }
+
+  // Pour les routes protégées qui nécessitent un appareil mobile ou une PWA
+  const isMobile = isMobileDevice()
+  const isPWA = isPWAInstalled()
+
+  // Bloquer l'accès direct à l'application sur desktop
+  if (!isMobile && !to.path.includes('/landing') && to.name !== 'LandingPage') {
+    next({ name: 'LandingPage' })
+    return
+  }
+
+  // Sur mobile, si l'app n'est pas installée et qu'on tente d'accéder à une route protégée
+  if (isMobile && !isPWA && !to.path.includes('/install') && to.name !== 'InstallInstructions') {
+    next({ name: 'InstallInstructions' })
     return
   }
 

@@ -1,23 +1,30 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { getDeviceOS } from '@/utils/deviceDetection'
+import { isPWAInstalled } from '@/utils/redirectUtils'
 
 const deviceOS = ref('desktop')
 const showInstallPopup = ref(false)
+const router = useRouter()
 
 // Déterminer le système d'exploitation de l'appareil au chargement
 onMounted(() => {
   deviceOS.value = getDeviceOS()
 
   // Vérifier si l'application est déjà installée (en mode standalone)
-  const isInStandaloneMode =
-    window.matchMedia('(display-mode: standalone)').matches ||
-    window.navigator.standalone ||
-    document.referrer.includes('android-app://')
+  const isInStandaloneMode = isPWAInstalled()
 
   if (isInStandaloneMode) {
     // Si déjà installée en mode standalone, rediriger vers l'app
     showInstallPopup.value = false
+    // Rediriger vers l'application principale si authentifié
+    const authStore = JSON.parse(localStorage.getItem('auth') || '{"isAuthenticated": false}')
+    if (authStore.isAuthenticated) {
+      router.push({ name: 'ParentHome' })
+    } else {
+      router.push({ name: 'AuthLogin' })
+    }
   } else {
     // Sinon, montrer les instructions d'installation
     showInstallPopup.value = true

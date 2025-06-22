@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import QRCode from 'qrcode'
-import { isMobileDevice, getDeviceOS } from '@/utils/deviceDetection'
+import { isMobileDevice } from '@/utils/deviceDetection'
 
 const router = useRouter()
 const qrCodeUrl = ref('')
