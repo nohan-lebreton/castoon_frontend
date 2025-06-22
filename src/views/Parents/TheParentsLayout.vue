@@ -21,6 +21,14 @@ const items = ref([
     label: 'Profil Parent',
     items: [
       {
+        label: 'Mes enfants',
+        icon: 'pi pi-home',
+        command: () => {
+          transitionStore.setTransition('fade')
+          router.push({ name: 'ParentHome' })
+        },
+      },
+      {
         label: 'Mon compte',
         icon: 'pi pi-user',
         command: () => {

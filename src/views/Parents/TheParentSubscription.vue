@@ -1,12 +1,7 @@
 <script setup>
 import Button from 'primevue/button'
 import Card from 'primevue/card'
-import { useTransition } from '@/stores/useTransition'
-import { useAuth } from '@/stores/useAuth.js'
 import { ref } from 'vue'
-
-const transitionStore = useTransition()
-const auth = useAuth()
 
 // Données fictives d'abonnement à remplacer par les vraies données
 const subscription = ref({
@@ -60,17 +55,6 @@ const cancelSubscription = () => {
   <div class="subscription-container">
     <div class="subscription-header">
       <h2 class="subscription-title">Mon Abonnement</h2>
-      <Button
-        icon="pi pi-arrow-left"
-        class="p-button-rounded p-button-text"
-        label="Retour"
-        @click="
-          () => {
-            transitionStore.setTransition('slide-right')
-            $router.push({ name: 'ParentHome' })
-          }
-        "
-      />
     </div>
 
     <Card>

@@ -3,12 +3,9 @@ import Button from 'primevue/button'
 import Card from 'primevue/card'
 import InputText from 'primevue/inputtext'
 import { useAuth } from '@/stores/useAuth.js'
-import { useTransition } from '@/stores/useTransition'
 import { ref, onMounted } from 'vue'
 
 const auth = useAuth()
-const transitionStore = useTransition()
-const user = ref(auth.user || {})
 
 const formData = ref({
   username: '',
@@ -36,17 +33,6 @@ const updateProfile = async () => {
   <div class="account-container">
     <div class="account-header">
       <h2 class="account-title">Mon Compte</h2>
-      <Button
-        icon="pi pi-arrow-left"
-        class="p-button-rounded p-button-text"
-        label="Retour"
-        @click="
-          () => {
-            transitionStore.setTransition('slide-right')
-            $router.push({ name: 'ParentHome' })
-          }
-        "
-      />
     </div>
 
     <Card>

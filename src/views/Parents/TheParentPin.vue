@@ -101,7 +101,7 @@ const updatePin = () => {
 
           <div class="pin-actions">
             <Button
-              label="Enregistrer le code PIN"
+              label="Enregistrer le nouveau code PIN"
               severity="success"
               icon="pi pi-check"
               @click="updatePin"
