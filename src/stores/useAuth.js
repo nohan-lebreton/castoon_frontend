@@ -21,7 +21,6 @@ export const useAuth = defineStore('auth', {
           identifier,
           password,
         })
-
         // Mettre à jour l'état du store
         this.user = response.data.user
         this.token = response.data.jwt

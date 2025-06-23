@@ -2,11 +2,9 @@
 import Button from 'primevue/button'
 import Card from 'primevue/card'
 import InputOtp from 'primevue/inputotp'
-import { useTransition } from '@/stores/useTransition'
 import { useAuth } from '@/stores/useAuth.js'
 import { ref, onMounted } from 'vue'
 
-const transitionStore = useTransition()
 const auth = useAuth()
 
 const currentPin = ref('')
@@ -48,20 +46,14 @@ const updatePin = () => {
   <div class="pin-container">
     <div class="pin-header">
       <h2 class="pin-title">Code PIN</h2>
-      <Button
-        icon="pi pi-arrow-left"
-        class="p-button-rounded p-button-text"
-        label="Retour"
-        @click="
-          () => {
-            transitionStore.setTransition('slide-right')
-            $router.push({ name: 'ParentHome' })
-          }
-        "
-      />
     </div>
 
     <Card>
+      <template #header>
+        <div class="pin-header">
+          <h2 class="pin-code">1 2 3 4</h2>
+        </div>
+      </template>
       <template #title>
         <div class="card-title">Configuration du code PIN</div>
       </template>
@@ -114,15 +106,23 @@ const updatePin = () => {
 </template>
 
 <style scoped>
+.pin-code {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  color: #31af97;
+  text-align: center;
+  margin-bottom: 1rem;
+}
 .pin-container {
   padding: 20px;
 }
 
 .pin-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
 }
 
 .pin-title {

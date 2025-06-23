@@ -1,6 +1,9 @@
 <script setup>
 import Button from 'primevue/button'
 import ChildrenList from '@/components/parents/ChildrenList.vue'
+import { useTransition } from '@/stores/useTransition'
+
+const transitionStore = useTransition()
 </script>
 <template>
   <div>
@@ -14,6 +17,7 @@ import ChildrenList from '@/components/parents/ChildrenList.vue'
           icon="pi pi-user-edit"
           @click="
             () => {
+              transitionStore.setTransition('slide-left')
               $router.push({ name: 'addChild' })
             }
           "

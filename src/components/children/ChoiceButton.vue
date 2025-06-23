@@ -141,6 +141,7 @@ defineProps({
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 20px;
   width: 100%;
   margin: 20px 0;
 }

@@ -9,6 +9,7 @@ import PortraitWarning from '@/components/orientation/PortraitWarning.vue'
 
 const transitionStore = useTransition()
 const auth = useAuth()
+console.log('auth.user', auth.user)
 const router = useRouter()
 const menu = ref()
 

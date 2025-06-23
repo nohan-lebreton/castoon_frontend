@@ -5,7 +5,6 @@ import { useTopics } from '@/stores/useTopics'
 import { computed, onMounted } from 'vue'
 import ChoiceButton from '@/components/children/ChoiceButton.vue'
 import { useRouter } from 'vue-router'
-import ScrollPanel from 'primevue/scrollpanel'
 import Button from 'primevue/button'
 import { ref, watch } from 'vue'
 import { onUnmounted } from 'vue'
@@ -14,6 +13,10 @@ import { useTransition } from '@/stores/useTransition'
 
 const audioPlayer = ref(null)
 const isPlaying = ref(false)
+const transcriptionContainer = ref(null)
+const autoScrollActive = ref(true)
+const scrollInterval = ref(null)
+const scrollSpeed = ref(40) // pixels par seconde pour le défilement
 
 onUnmounted(() => {
   if (audioPlayer.value) {
@@ -23,7 +26,50 @@ onUnmounted(() => {
     isPlaying.value = false
     audioEnded.value = false
   }
+
+  // Nettoyer l'intervalle de défilement
+  stopAutoScroll()
 })
+
+// Fonction pour démarrer le défilement automatique
+const startAutoScroll = () => {
+  if (!autoScrollActive.value || !transcriptionContainer.value) return
+
+  // Arrêter tout intervalle existant
+  stopAutoScroll()
+
+  // Calculer la durée totale de défilement basée sur la durée de l'audio
+  const totalScrollHeight =
+    transcriptionContainer.value.scrollHeight - transcriptionContainer.value.clientHeight
+  const scrollStep = scrollSpeed.value / 10 // Ajuster selon la vitesse souhaitée
+
+  // Créer un nouvel intervalle pour le défilement progressif
+  scrollInterval.value = setInterval(() => {
+    if (transcriptionContainer.value.scrollTop < totalScrollHeight) {
+      transcriptionContainer.value.scrollTop += scrollStep
+    } else {
+      stopAutoScroll()
+    }
+  }, 100)
+}
+
+// Fonction pour arrêter le défilement automatique
+const stopAutoScroll = () => {
+  if (scrollInterval.value) {
+    clearInterval(scrollInterval.value)
+    scrollInterval.value = null
+  }
+}
+
+// Fonction pour basculer le défilement automatique
+const toggleAutoScroll = () => {
+  autoScrollActive.value = !autoScrollActive.value
+  if (autoScrollActive.value && isPlaying.value) {
+    startAutoScroll()
+  } else {
+    stopAutoScroll()
+  }
+}
 
 const toggleAudio = () => {
   if (!audioPlayer.value) return
@@ -31,9 +77,13 @@ const toggleAudio = () => {
   if (isPlaying.value) {
     audioPlayer.value.pause()
     isPlaying.value = false
+    // Arrêter le défilement automatique quand on met en pause
+    stopAutoScroll()
   } else {
     audioPlayer.value.play()
     isPlaying.value = true
+    // Démarrer le défilement automatique quand on démarre l'audio
+    startAutoScroll()
   }
 }
 
@@ -71,12 +121,14 @@ watch(currentNode, (newNode) => {
     audioPlayer.value.addEventListener('ended', () => {
       isPlaying.value = false
       audioEnded.value = true
+      stopAutoScroll()
     })
 
     audioPlayer.value
       .play()
       .then(() => {
         isPlaying.value = true
+        startAutoScroll()
       })
       .catch((err) => {
         console.warn('Autoplay refusé par le navigateur :', err)
@@ -98,7 +150,7 @@ onMounted(() => {
 
 <template>
   <div class="podcast-node__container">
-    <ScrollPanel class="scroll-panel">
+    <div ref="transcriptionContainer" class="transcription-container">
       <div v-if="currentNode && currentNode.transcription">
         <div
           v-for="(paragraph, index) in currentNode.transcription"
@@ -126,7 +178,7 @@ onMounted(() => {
       <div v-else>
         <p>Aucune transcription disponible pour ce nœud.</p>
       </div>
-    </ScrollPanel>
+    </div>
 
     <div class="podcast-node__footer">
       <div class="podcast-node__tools">
@@ -150,6 +202,15 @@ onMounted(() => {
           class="podcast-node__tools__button"
           @click="toggleAudio"
         />
+        <Button
+          severity="secondary"
+          :icon="autoScrollActive ? 'pi pi-lock' : 'pi pi-lock-open'"
+          class="podcast-node__tools__button auto-scroll-button"
+          @click="toggleAutoScroll"
+          :class="{ active: autoScrollActive }"
+          tooltip="Défilement automatique"
+          tooltipOptions="bottom"
+        />
       </div>
       <!-- show les boutons sur l'audio est finit-->
       <ChoiceButton :key="currentNode.numero" :show="audioEnded" :node="currentNode" />
@@ -164,6 +225,12 @@ onMounted(() => {
   height: 80px;
   border-radius: 12px; /* optionnel, pour des coins plus arrondis */
 }
+
+.auto-scroll-button.active {
+  background-color: #4caf50;
+  color: white;
+}
+
 .podcast-node__footer {
   display: flex;
   justify-content: space-between;
@@ -174,7 +241,7 @@ onMounted(() => {
   margin: 20px 0;
   gap: 1rem;
 }
-.scroll-panel {
+.transcription-container {
   max-height: 150px; /* ou ce que tu veux */
   background-color: black;
   color: white;
@@ -182,6 +249,7 @@ onMounted(() => {
   border: 1px solid #ccc;
   padding: 1rem;
   border-radius: 8px;
+  scroll-behavior: smooth;
 }
 
 .podcast-node__transcription {

@@ -34,6 +34,11 @@ const showParentAccess = () => {
 
 // Ajouter un chiffre au code PIN
 const addDigit = (digit) => {
+  // Réinitialiser l'état d'erreur dès qu'on commence à entrer un nouveau code
+  if (pinError.value) {
+    pinError.value = false
+  }
+
   if (pinCode.value.length < pinLength) {
     pinCode.value += digit
 
@@ -68,7 +73,7 @@ const verifyPinCode = async () => {
       } else {
         // Afficher une erreur
         pinError.value = true
-        pinCode.value = ''
+        pinCode.value = '' // Réinitialiser le code pour permettre une nouvelle saisie
       }
       pinLoading.value = false
     }, 500)
@@ -76,15 +81,16 @@ const verifyPinCode = async () => {
     console.error('Erreur lors de la vérification du PIN:', error)
     pinError.value = true
     pinLoading.value = false
-    pinCode.value = ''
+    pinCode.value = '' // Réinitialiser le code en cas d'erreur
   }
 }
 
 // Animation de remplissage du PIN
 const getPinFillClass = (index) => {
+  const isFilled = pinCode.value.length > index
   return {
-    'pin-digit-filled': pinCode.value.length > index,
-    'pin-digit-error': pinError.value,
+    'pin-digit-filled': isFilled && !pinError.value,
+    'pin-digit-error': isFilled && pinError.value,
   }
 }
 
@@ -207,9 +213,12 @@ onUnmounted(() => {
   max-width: 400px;
   border-radius: 12px;
   background-color: white;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
   width: 90%;
+}
+
+.pin-content {
+  position: relative;
 }
 
 .warning-icon {
@@ -265,19 +274,26 @@ p {
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
-  border: 2px solid white;
+  border: 2px solid #2e89e5;
   position: relative;
   transition: all 0.3s ease;
+  background-color: transparent;
 }
 
 .pin-digit-filled {
-  background-color: white;
+  background-color: #2e89e5;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .pin-digit-error {
   background-color: #ff6b6b;
   border-color: #ff6b6b;
   animation: shake 0.5s;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .pin-keypad {
@@ -297,7 +313,7 @@ p {
   width: 4rem;
   height: 4rem;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: #2e89e5;
   border: none;
   color: white;
   font-size: 1.5rem;
@@ -310,16 +326,25 @@ p {
 }
 
 .keypad-button:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: #1a7ad9;
 }
 
 .keypad-button:active {
   transform: scale(0.95);
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: #1560ae;
 }
 
 .function-button {
   font-size: 1.2rem;
+  background-color: #f79c07;
+}
+
+.function-button:hover {
+  background-color: #e08c06;
+}
+
+.function-button:active {
+  background-color: #c67c05;
 }
 
 .error-message {

@@ -14,6 +14,8 @@ import TheParentChild from '../views/Parents/TheParentChild.vue'
 import TheParentAccount from '../views/Parents/TheParentAccount.vue'
 import TheParentSubscription from '../views/Parents/TheParentSubscription.vue'
 import TheParentPin from '../views/Parents/TheParentPin.vue'
+import TheParentAddChild from '../views/Parents/TheParentAddChild.vue'
+import TheParentEditChild from '../views/Parents/TheParentEditChild.vue'
 
 // Children views
 import TheChildLayout from '../views/Childrens/TheChildLayout.vue'
@@ -62,6 +64,17 @@ const router = createRouter({
           path: 'child/:documentId',
           name: 'ParentChild',
           component: TheParentChild,
+          props: true,
+        },
+        {
+          path: 'add-child',
+          name: 'addChild',
+          component: TheParentAddChild,
+        },
+        {
+          path: 'edit-child/:documentId',
+          name: 'EditChild',
+          component: TheParentEditChild,
           props: true,
         },
         {
